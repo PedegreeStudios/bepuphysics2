@@ -10,7 +10,7 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/bepu/bepuphysics2</RepositoryUrl>
     <PackageIcon>bepuphysicslogo256.png</PackageIcon>
-    <Configurations>Debug;Release;ReleaseNoProfiling</Configurations>
+    <Configurations>Debug;Release;ReleaseNoProfiling;ExportRelease;ExportDebug</Configurations>
     <LangVersion>latest</LangVersion>
     <PackageTags>physics;3d;rigid body;real time;simulation</PackageTags>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -35,7 +35,17 @@
     <DefineConstants>TRACE;DEBUG;CHECKMATH;PROFILE</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)'=='ExportDebug'">
+    <Optimize>false</Optimize>
+    <DefineConstants>TRACE;DEBUG;CHECKMATH;PROFILE</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;RELEASE;PROFILE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='ExportRelease'">
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;RELEASE;PROFILE</DefineConstants>
   </PropertyGroup>
@@ -92,7 +102,7 @@
 
   <!-- Needed for Source Link package debugging, see https://github.com/dotnet/sourcelink -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
