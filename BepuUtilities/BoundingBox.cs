@@ -270,6 +270,25 @@ namespace BepuUtilities
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool ConservativeMerged(Vector3 minA, Vector3 maxA, Vector3 minB, Vector3 maxB, ref Vector3 min, ref Vector3 max)
+        {
+            var mn = Vector3.Min(minA, minB);
+            if (mn.X < min.X || mn.Y < min.Y || mn.Z < min.Z)
+            {
+                min = mn;
+                max = Vector3.Max(maxA, maxB);
+                return true;
+            }
+            var mx = Vector3.Max(maxA, maxB);
+            if (mx.X > max.X || mx.Y > max.Y || mx.Z > max.Z)
+            {
+                max = mx;
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Determines if a bounding box intersects a bounding sphere.
         /// </summary>

@@ -21,7 +21,11 @@ namespace BepuPhysics.Trees
                 //Compute the new bounding box for this node.
                 ref var parent = ref Nodes[metanode.Parent];
                 ref var childInParent = ref Unsafe.Add(ref parent.A, metanode.IndexInParent);
-                BoundingBox.CreateMerged(node.A.Min, node.A.Max, node.B.Min, node.B.Max, out childInParent.Min, out childInParent.Max);
+                if (!BoundingBox.ConservativeMerged(node.A.Min, node.A.Max, node.B.Min, node.B.Max, ref childInParent.Min, ref childInParent.Max))
+                {
+                    //If the bounding box didn't change, then no parent bounding boxes will change either.
+                    break;
+                }
                 node = ref parent;
                 metanode = ref Metanodes[metanode.Parent];
             }
